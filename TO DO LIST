@@ -1,0 +1,28 @@
+<template>
+  <div>
+    <input v-model="newTask" @keyup.enter="addTask" placeholder="Add new task" />
+    <ul>
+      <li v-for="(task, index) in tasks" :key="index">{{ task }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      newTask: '',
+      tasks: JSON.parse(localStorage.getItem('tasks')) || []
+    };
+  },
+  methods: {
+    addTask() {
+      if (this.newTask.trim()) {
+        this.tasks.push(this.newTask);
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        this.newTask = '';
+      }
+    }
+  }
+};
+</script>
